@@ -3,9 +3,9 @@ var toBinary = function(number) {
     binaryCode = [];//763498763948568
     while (number > 0) {
         binaryCode[binaryCode.length] = number % 2;
-        number >>= 1;
+        number >>= 1;//63625438767465357675636586546
     }
-    return(binaryCode);//64923698765976259784
+    return(binaryCode);
 };
 var toDecimal=function(bin){
     midnum=0;
