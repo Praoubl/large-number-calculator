@@ -1,5 +1,5 @@
 var n1=[1,0,1],n2=[6,5],n3=[],n4=[],m5=[],mn=0,nm=0,mnadd=[],mnadd1=[],mnmult1=[],mnmult2=[],mnmult3=[],mndiv=[],mnexp=[],i=0,j=0,tadd="",tmult="",texp="",tout="",binaryCode,midnum,midarray=[],midshift=[];
-var h=0, i=0, j=0, k=0, l=0, m=0, p=0;
+var h=0, i=0, j=0, k=0, l=0, m=0, p=0, ii=0;
 var toBinary = function(number) {
     binaryCode = [];
     while (number > 0) {
@@ -11,7 +11,14 @@ var toBinary = function(number) {
 var toDecimal=function(bin){
     midnum=0;
     for(i=0;i<bin.length;i++){
-        midnum+=bin[i]*pow(2,i);
+        midnum+=bin[i]*Math.pow(2,i);
+    }
+    return(midnum);
+};
+var toNumber=function(ar){
+    midnum=0;
+    for(ii=0;ii<ar.length;ii++){
+        midnum+=ar[ii]*Math.pow(10,ar.length-ii-1);
     }
     return(midnum);
 };
@@ -128,8 +135,8 @@ var dezero=function(a){
     mn=0;
     mn0=[0];
     mb=false;
-    if(a[a.length-1]===0&&a.length>1){
-      for(h=0;h<a.length-1;h++){
+    if(a[a.length-1]===0&&a.length>2){
+      for(h=1;h<a.length-1;h++){
           if(a[a.length-h-1]!==0){
               mb=true;
           }
@@ -141,6 +148,8 @@ var dezero=function(a){
       for(h=0;h<mn;h++){
           mn0[h]=a[h];
       }
+    }else if(a[a.length-1]===0&&a.length>1){
+      mn0=[a[0]];
     }else{
       mn0=a;
     }
@@ -175,9 +184,17 @@ var printout=function(o){
 var exponent=function(base,expo){//expo is a number
     mnexp=[1];
     for(p=0;p<expo;p++){
-        mnexp=multiply(mnexp,base);
+      //console.log(p);
+      mnexp=multiply(mnexp,base);
     }
     return(mnexp);
+};
+var digitSum=function(a){
+  mn=0;
+  for(q=0;q<a.length;q++){
+    mn+=a[q];
+  }
+  return(mn);
 };
 //console.log(add(n1,n2));
 //printout(add(n1,n2));
@@ -188,7 +205,8 @@ var exponent=function(base,expo){//expo is a number
 //console.log(multiply(1,2));
 //printout(multiply(n1,n2));
 //printout(subtract([9,4,9],[5,5]));
-printout(exponent([2],20));
+//printout(exponent([2],21));
+//console.log("> "+digitSum(exponent([2],10)));
 //dezero([0,0]);
 //console.log(shiftDecimal([1,1,2],3));
 //var a=n1;
@@ -203,3 +221,25 @@ printout(exponent([2],20));
 //println(exponent(2,2));
 //println(floor(856485648/pow(10,3))-floor(856485648/pow(10,3+1))*10);
 //println(ceil(log(1)/log(10)));
+//console.log(dezero([2,0]));
+//console.log(exponent([2],toNumber([5])));
+var run=function(){
+  n1=prompt("enter first number");
+  var m1=toarray(toNumber(n1));
+  var op=prompt("enter operator");
+  n2=prompt("enter second number");
+  var m2=toarray(toNumber(n2));
+  if(op==="+"){
+    printout(add(m1,m2));
+  }else if(op==="-"){
+    printout(subtract(m1,m2));
+  }else if(op==="*"||op==="x"){
+    printout(multiply(m1,m2));
+  }else if(op==="^"){
+    printout(exponent(m1,toNumber(m2)));
+  }else{
+    console.log(op+" is not implemented");
+  };
+  run();
+};
+run();
